@@ -20,10 +20,9 @@ class CotacaoService
             $diasCobrados = 5;
         }
 
-        // Calcular a idade exata na data de início da viagem
+        // Calcular idade exata na data de início da viagem e definir multiplicador
         $idade = $dataNascimento->diffInYears($dataInicio);
-
-        // Definir o multiplicador com base na faixa etária
+        
         $multiplicador = 1.0; // Padrão para 18 a 64 anos
         if ($idade <= 17) {
             $multiplicador = 0.5;
@@ -31,11 +30,32 @@ class CotacaoService
             $multiplicador = 2.0;
         }
 
-        // Retorno temporário para ver os novos dados
+        // Dicionário que define a tarifa diária com base no destino
+        $tarifas = [
+            'NACIONAL' => 10.00,
+            'AMERICAS' => 16.00,
+            'EUROPA'   => 22.00,
+        ];
+        $tarifaDiaria = $tarifas[$dados['destino']]; 
+
+        // Executar os cálculos financeiros (Ordem de cálculo)
+        $valorBase = $tarifaDiaria * $diasCobrados;
+        $subtotal = $valorBase * $multiplicador;
+        
+        // Verifica se a checkbox da bagagem foi marcada
+        $temBagagem = isset($dados['bagagem']) && $dados['bagagem'];
+        $valorBagagem = $temBagagem ? (3.00 * $diasCobrados) : 0.00;
+
+        $total = $subtotal + $valorBagagem;
+
+        // Devolver todos os dados que precisam de ser guardados na base de dados
         return [
             'dias_cobrados' => $diasCobrados,
-            'idade' => $idade,
-            'multiplicador' => $multiplicador,
+            'idade'         => $idade,
+            'valor_base'    => $valorBase,
+            'subtotal'      => $subtotal,
+            'valor_bagagem' => $valorBagagem,
+            'total'         => round($total, 2), // Arredondamento de duas casas decimais
         ];
     }
 }
