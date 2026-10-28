@@ -14,7 +14,7 @@ return new class extends Migration
     Schema::create('cotacaos', function (Blueprint $table) {
         $table->id();
         
-        // Dados de Entrada[cite: 1, 2]
+        // Dados de Entrada
         $table->string('nome');
         $table->date('data_nascimento');
         $table->string('destino');
@@ -22,7 +22,7 @@ return new class extends Migration
         $table->date('data_fim');
         $table->boolean('bagagem')->default(false);
 
-        // Valores Calculados[cite: 3, 4]
+        // Valores Calculados
         $table->integer('dias_cobrados');
         $table->integer('idade');
         $table->decimal('valor_base', 10, 2);
