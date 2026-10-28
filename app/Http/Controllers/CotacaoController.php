@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\CotacaoRequest;
 
 class CotacaoController extends Controller
 {
@@ -11,10 +11,11 @@ class CotacaoController extends Controller
         return view('cotacoes.create');
     }
 
-    public function store(Request $request)
+    public function store(CotacaoRequest $request)
     {
-        // O dd() (dump and die) pausa a aplicação e imprime os dados na tela.
-        // É ideal para testarmos se o HTML está enviando as informações corretamente.
-        dd($request->all());
+        // O método validated() devolve apenas os dados que passaram nas regras.
+        $dadosValidados = $request->validated();
+        
+        dd($dadosValidados);
     }
 }
