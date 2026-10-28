@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CotacaoRequest;
+use App\Services\CotacaoService;
 
 class CotacaoController extends Controller
 {
@@ -11,11 +12,13 @@ class CotacaoController extends Controller
         return view('cotacoes.create');
     }
 
-    public function store(CotacaoRequest $request)
+    public function store(CotacaoRequest $request, CotacaoService $service)
     {
-        // O método validated() devolve apenas os dados que passaram nas regras.
         $dadosValidados = $request->validated();
         
-        dd($dadosValidados);
+        // Passa os dados para o Service fazer a matemática
+        $calculo = $service->calcular($dadosValidados);
+        
+        dd($calculo);
     }
 }
