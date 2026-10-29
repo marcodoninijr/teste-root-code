@@ -7,52 +7,85 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Teste Técnico - Desenvolvedor(a) Júnior · Laravel + Blade
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Como instalar e rodar o projeto
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
+Clone o repositório com:
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/marcodoninijr/teste-root-code.git
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Acesse a pasta do projeto.
 
-## Contributing
+Instale as dependências do PHP com: 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+composer install
+```
 
-## Code of Conduct
+Configure os arquivos de ambiente com:
+```bash
+cp .env.example .env
+```
+e
+```bash
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Crie a base de dados SQLite e execute as migrations com:
+```bash
+touch database/database.sqlite
+```
+e
+```bash
+php artisan migrate
+```
 
-## Security Vulnerabilities
+Inicie o servidor local com:
+```bash
+php artisan serve
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Acesse o navegador em: http://localhost:8000/cotacoes/nova
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Como rodar os testes
+
+Para executar os testes unitários (PHPUnit) que validam todas as regras de negócio:
+```bash
+php artisan test
+```
+
+
+## Decisões 
+
+No arquivo resources\views\layouts\app.blade.php está definido o layout da página com bootstrap via CDN pra ficar mais organizado.
+
+No arquivo resources\views\cotacoes\create.blade.php está a view do formulário, com os campos exigidos, rotas nomeadas e captura de erros.
+
+No arquivo routes\web.php ficam as rotas da aplicação. 
+
+No arquivo app\Http\Controllers\CotacaoController.php está o método create que chama a view do formulário. Também está a função store que valida os dados no formulário, chama o service para fazer os cálculos matemáticos, junta os dados validados com o cálculo em um array, guarda tudo na base de dados e redireciona para os detalhes da cotação. Também está a função show, que procura a cotação pelo ID e mostra os detalhes da cotação.
+
+No arquivo app\Http\Requests\CotacaoRequest.php estão as regras do formulário, para garantir nenhum erro (como data impossível), a formatação dos dados inseridos e a tradução dos erros para português.
+
+No arquivo database\migrations\2026_10_27_231609_create_cotacaos_table.php, criamos as tabelas no banco de dados, através do comando "php artisan migrate".
+
+No arquivo app\Models\Cotacao.php está o model que permite gravar dados em todas as colunas de uma só vez.
+
+No arquivo app\Services\CotacaoService.php está a lógica do cálculo dos dias cobrados através da manipulação das datas. Também está a devolução dos dados que precisam ser guardados no database.
+
+No arquivo resources\views\cotacoes\show.blade.php há o HTML que mostra o resultado das cotações como uma tabela financeira.
+
+No arquivo tests\Unit\CotacaoServiceTest.php temos os testes unitários para garantir que o comportamento do projeto está adequado.
+
+
+## Resoluções de dúvidas
+
+No problema do aniversário durante a viagem, a biblioteca Carbon já extrai a diferença de anos inteiros exclusivamente entre a data_nascimento e a data_inicio. Isso garante que a idade fique "congelada" e que o multiplicador cobrado seja o correto.
+
+O Carbon devolvia a idade do viajante com várias casas decimais. No primeiro momento a idade era número gigante. O prolema foi resolvido com um simples (int) antes da variável convertendo o resultado para números inteiros.
+
+No formulário das informações do viajante, adicionei uma caixa de seleção indicando se o viajante pagaria a cobertura de bagagem. Como os formulários HTML não enviam dados de checkboxes desmarcadas, foi necessário usar isset() no Service para evitar erros de índice indefinido e aplicar corretamente o acréscimo somente quando a opção fosse marcada.
+
