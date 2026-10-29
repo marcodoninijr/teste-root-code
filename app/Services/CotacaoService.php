@@ -21,7 +21,7 @@ class CotacaoService
         }
 
         // Calcular idade exata na data de início da viagem e definir multiplicador
-        $idade = $dataNascimento->diffInYears($dataInicio);
+        $idade = (int) $dataNascimento->diffInYears($dataInicio);
         
         $multiplicador = 1.0; // Padrão para 18 a 64 anos
         if ($idade <= 17) {

@@ -11,3 +11,5 @@ Route::get('/', function () {
 Route::get('/cotacoes/nova', [CotacaoController::class, 'create'])->name('cotacoes.create');
 
 Route::post('/cotacoes', [CotacaoController::class, 'store'])->name('cotacoes.store');
+
+Route::get('/cotacoes/{id}', [CotacaoController::class, 'show'])->name('cotacoes.show');
