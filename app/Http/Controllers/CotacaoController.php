@@ -39,4 +39,12 @@ class CotacaoController extends Controller
         
         return view('cotacoes.show', compact('cotacao'));
     }
+
+    public function index()
+    {
+        // Traz as cotações mais recentes primeiro, paginadas de 10 em 10
+        $cotacoes = Cotacao::orderBy('created_at', 'desc')->paginate(10);
+        
+        return view('cotacoes.index', compact('cotacoes'));
+    }
 }

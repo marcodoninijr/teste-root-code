@@ -39,6 +39,7 @@
 
                 <div class="mt-4 text-center">
                     <a href="{{ route('cotacoes.create') }}" class="btn btn-outline-primary">Nova Cotação</a>
+                    <a href="{{ route('cotacoes.index') }}" class="btn btn-outline-secondary ms-2">Ver Histórico</a>
                 </div>
             </div>
         </div>

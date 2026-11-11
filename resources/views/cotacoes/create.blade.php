@@ -61,6 +61,10 @@
 
                     <button type="submit" class="btn btn-primary w-100">Calcular Cotação</button>
                 </form>
+                
+                <div class="mt-3 text-center">
+                    <a href="{{ route('cotacoes.index') }}" class="text-decoration-none text-muted">Ver histórico de cotações</a>
+                </div>
             </div>
         </div>
     </div>

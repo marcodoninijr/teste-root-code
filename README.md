@@ -66,7 +66,7 @@ No arquivo resources\views\cotacoes\create.blade.php está a view do formulário
 
 No arquivo routes\web.php ficam as rotas da aplicação. 
 
-No arquivo app\Http\Controllers\CotacaoController.php está o método create que chama a view do formulário. Também está a função store que valida os dados no formulário, chama o service para fazer os cálculos matemáticos, junta os dados validados com o cálculo em um array, guarda tudo na base de dados e redireciona para os detalhes da cotação. Também está a função show, que procura a cotação pelo ID e mostra os detalhes da cotação.
+No arquivo app\Http\Controllers\CotacaoController.php está o método create que chama a view do formulário. Também está a função store que valida os dados no formulário, a função que chama o service para fazer os cálculos matemáticos, junta os dados validados com o cálculo em um array, guarda tudo na base de dados e redireciona para os detalhes da cotação. Também está a função show, que procura a cotação pelo ID e mostra os detalhes da cotação. Também está a função index, que nos mostra o histórico de cotações. 
 
 No arquivo app\Http\Requests\CotacaoRequest.php estão as regras do formulário, para garantir nenhum erro (como data impossível), a formatação dos dados inseridos e a tradução dos erros para português.
 
@@ -80,6 +80,7 @@ No arquivo resources\views\cotacoes\show.blade.php há o HTML que mostra o resul
 
 No arquivo tests\Unit\CotacaoServiceTest.php temos os testes unitários para garantir que o comportamento do projeto está adequado.
 
+No arquivo resources\views\cotacoes\index.blade.php temos a view do histórico de cotações.
 
 ## Resoluções de dúvidas
 
